@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VetAtlas - Veterinary Bacteriology Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0daf82",
+            "primary-dark": "#088f6a",
+            "secondary": "#06b6d4",
+            "background-dark": "#061018",
+            "surface-dark": "#0d1b2a",
+          },
+          fontFamily: {
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+          backgroundImage: {
+            'grid-pattern': "linear-gradient(to right, #1e3a52 1px, transparent 1px), linear-gradient(to bottom, #1e3a52 1px, transparent 1px)",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #061018;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    
+    .glass-panel {
+      background: rgba(13, 27, 42, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .glass-panel-hover:hover {
+      background: rgba(13, 27, 42, 0.8);
+      border: 1px solid rgba(13, 175, 130, 0.4);
+      transform: perspective(1000px) rotateX(2deg) translateY(-8px);
+      box-shadow: 0 30px 60px -20px rgba(13, 175, 130, 0.4);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Noise Texture Overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Glitch Effect */
+    .glitch-text {
+      position: relative;
+    }
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+    }
+    .glitch-text::before {
+      color: #ff00c1;
+      z-index: -1;
+      animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+      display: none;
+    }
+    .glitch-text:hover::before, .glitch-text:hover::after { display: block; }
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    .grid-bg {
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    .scanline {
+      width: 100%;
+      height: 2px;
+      z-index: 10;
+      background: linear-gradient(90deg, transparent, rgba(13, 175, 130, 0.5), transparent);
+      box-shadow: 0 0 15px rgba(13, 175, 130, 0.8);
+      position: absolute;
+      top: -10px;
+      animation: scan 6s linear infinite;
+    }
+    @keyframes scan {
+      0% { top: 0%; opacity: 0; }
+      5% { opacity: 1; }
+      95% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* Chromatic Aberration on Hover */
+    .group:hover .chromatic-text {
+      animation: chromatic 0.2s infinite;
+    }
+    @keyframes chromatic {
+      0% { text-shadow: 1px 0 0 rgba(255,0,0,0.5), -1px 0 0 rgba(0,255,255,0.5); }
+      50% { text-shadow: -1px 0 0 rgba(255,0,0,0.5), 1px 0 0 rgba(0,255,255,0.5); }
+      100% { text-shadow: 1px 0 0 rgba(255,0,0,0.5), -1px 0 0 rgba(0,255,255,0.5); }
+    }
+
+    /* Screen Flicker */
+    @keyframes flicker {
+      0% { opacity: 0.97; }
+      5% { opacity: 1; }
+      10% { opacity: 0.9; }
+      15% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    body { animation: flicker 10s infinite; }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "three": "https://esm.sh/three@0.170.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div class="noise-overlay"></div>
+  <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
