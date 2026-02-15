@@ -7,7 +7,7 @@ export const MODULES_DATA: ModuleCard[] = [
     category: "BACTERIOLOGY",
     description:
       "Overview, Morphology, Culture Characteristics, and Virulence Factors.",
-    image: "./assets/pseudomonas.jpg",
+    image: "/assets/pseudomonas.jpg",
     stats: "Lab Guide",
     colorClass: "text-primary",
     details: "",
@@ -80,7 +80,7 @@ export const MODULES_DATA: ModuleCard[] = [
     category: "BACTERIOLOGY",
     description:
       "Intracellular survival, reproductive tract predilection, and diagnostic protocols.",
-    image: "./assets/brucella.jpg",
+    image: "/assets/brucella.jpg",
     stats: "Full Case",
     colorClass: "text-secondary",
     details: "",
@@ -189,7 +189,7 @@ export const MODULES_DATA: ModuleCard[] = [
     category: "BACTERIOLOGY",
     description:
       "Respiratory specialist, cause of Kennel Cough and Atrophic Rhinitis.",
-    image: "./assets/borderella.jpg",
+    image: "/assets/borderella.jpg",
     stats: "Lab Guide",
     colorClass: "text-purple-400",
     details: "",
@@ -274,7 +274,7 @@ export const MODULES_DATA: ModuleCard[] = [
     category: "BACTERIOLOGY",
     description:
       "Pathogen showing characteristic bipolar staining; cause of Septicemia and Pneumonia.",
-    image: "./assets/pasteurella.jpg",
+    image: "/assets/pasteurella.jpg",
     stats: "Full Review",
     colorClass: "text-primary",
     details: "",
